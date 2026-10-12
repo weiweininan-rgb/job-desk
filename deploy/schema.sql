@@ -205,8 +205,9 @@ as E'
   where owner_id = p_owner_id;
 ';
 
-revoke all on function public.claim_feishu_sync_slot(uuid) from public;
-revoke all on function public.release_feishu_sync_slot(uuid) from public;
+-- Supabase also grants these roles explicitly by default; revoking PUBLIC alone is insufficient.
+revoke all on function public.claim_feishu_sync_slot(uuid) from public, anon, authenticated;
+revoke all on function public.release_feishu_sync_slot(uuid) from public, anon, authenticated;
 grant execute on function public.claim_feishu_sync_slot(uuid) to service_role;
 grant execute on function public.release_feishu_sync_slot(uuid) to service_role;
 revoke all on function public.confirm_job_source(uuid) from public, anon;

@@ -39,6 +39,16 @@ export const formatSourceDate = (value = '') => {
   return match ? `${match[1]}/${match[2]}` : String(value);
 };
 
+export const sourceDateValue = (value, defaultYear = new Date().getFullYear()) => {
+  const normalized = normalizeSourceDate(value ?? '', defaultYear);
+  const match = normalized.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!match) return 0;
+  const [, year, month, day] = match.map(Number);
+  const date = new Date(Date.UTC(year, month - 1, day));
+  return date.getUTCFullYear() === year && date.getUTCMonth() === month - 1 && date.getUTCDate() === day
+    ? date.getTime() : 0;
+};
+
 export const splitPositions = (value = '') => value
   .toString()
   .split(/[\n、；;|]/)

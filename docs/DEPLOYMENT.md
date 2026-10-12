@@ -51,6 +51,19 @@ Pages 的账户和仓库可用条件以[GitHub 官方说明](https://docs.github
 
 ## 本地与维护
 
+### 已有实例的同步锁权限修复
+
+2026-10-12 之前初始化的实例，应在自己的 Supabase SQL Editor 执行
+`deploy/upgrades/202610120001_restrict_feishu_sync_rpc.sql`（或用 CLI 显式指定自己的 project-ref）。
+这是独立、可重复执行的权限补丁，不删除记录；不要在旧库重跑空库初始化脚本。
+它撤销匿名及登录用户对两个服务端同步锁 RPC 的执行权限，保留 service_role。
+即使未启用飞书，也应应用补丁。新实例的 `deploy/schema.sql` 已包含修复。
+
+### CSV 导出说明
+
+导出会在疑似公式开头的文本前添加制表符，并转义引号、逗号及换行，降低 Excel 打开 CSV 时的公式注入风险；只改变导出文件，不改动数据库原文。无效日期导出为空。
+制表符会成为单元格内容的一部分，供程序导入时须考虑这一差异。不同表格软件和重新保存后的处理可能不同，不能将其视为所有软件下的通用安全保证；不要执行或启用不可信内容中的公式。参见 [OWASP CSV Injection](https://community.owasp.org/attacks/CSV_Injection)。
+
 使用 Node.js 24，复制 .env.example 为 .env.local，仅填写前端公开变量；新实例保留 VITE_ENABLE_FEISHU=false。运行 `npm ci`、`npm run dev`，访问 http://localhost:8080。开发服务器只监听本机，不用作长期线上服务。
 
 每次修改远端前确认项目与授权范围。先导出 CSV，必要时使用 Supabase 数据库备份；CSV 不包含全部面试流程，不能当完整恢复备份。不要把导出的个人数据推到 GitHub。

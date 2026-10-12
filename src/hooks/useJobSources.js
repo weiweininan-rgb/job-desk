@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { parseJobWorkbook } from '@/lib/excelJobImport';
-import { DEFAULT_MAJOR_COMPANIES, DEFAULT_PROFILE_KEYWORDS, formatSourceDate } from '@/lib/jobMatcher';
+import { DEFAULT_MAJOR_COMPANIES, DEFAULT_PROFILE_KEYWORDS } from '@/lib/jobMatcher';
 import { feishuEnabled } from '@/lib/featureFlags';
 
 const fetchJobSources = async () => {
@@ -13,7 +13,7 @@ const fetchJobSources = async () => {
     .order('is_major_company', { ascending: false })
     .order('published_at', { ascending: false, nullsFirst: false });
   if (error) throw error;
-  return (data ?? []).map((source) => ({ ...source, published_at: formatSourceDate(source.published_at) }));
+  return data ?? [];
 };
 
 export const useJobSources = () => {

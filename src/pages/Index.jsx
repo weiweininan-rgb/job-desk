@@ -305,7 +305,7 @@ export default function Index() {
 
       <div>
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="h-auto w-full justify-start overflow-x-auto border border-slate-200 bg-white/90 shadow-sm sm:w-auto">
+          <TabsList className="grid h-auto w-full grid-cols-2 gap-1 border border-slate-200 bg-white/90 shadow-sm sm:inline-flex sm:w-auto sm:justify-start">
             <TabsTrigger value="list" className="flex items-center gap-2">
               <List className="w-4 h-4" />
               列表视图

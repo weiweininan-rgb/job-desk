@@ -398,13 +398,13 @@ export const CalendarView = ({ interviews: processes, applications, onProcessCli
   };
 
   return (
-    <Card className="w-full border-slate-200 bg-white/95">
-      <CardHeader className="flex flex-row items-center justify-between pb-2">
-        <div className="flex items-center gap-4">
-          <CardTitle className="text-lg font-semibold">
+    <Card className="min-w-0 w-full border-slate-200 bg-white/95">
+      <CardHeader className="flex flex-col items-start justify-between gap-3 space-y-0 p-3 pb-2 sm:p-6 sm:pb-2 lg:flex-row lg:items-center">
+        <div className="flex min-w-0 flex-wrap items-center gap-3 sm:gap-4">
+          <CardTitle className="text-lg font-semibold leading-snug">
             {getTitle()}
           </CardTitle>
-          <div className="flex items-center gap-1 rounded-lg bg-slate-100 p-1">
+          <div className="flex shrink-0 items-center gap-1 rounded-lg bg-slate-100 p-1">
             <Button
               variant={viewType === VIEW_TYPES.MONTH ? 'secondary' : 'ghost'}
               size="sm"
@@ -434,19 +434,19 @@ export const CalendarView = ({ interviews: processes, applications, onProcessCli
             </Button>
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-2">
           <Button variant="outline" size="sm" onClick={goToToday}>
             今天
           </Button>
-          <Button variant="ghost" size="sm" onClick={previous}>
+          <Button variant="ghost" size="sm" onClick={previous} aria-label="上一页">
             <ChevronLeft className="w-4 h-4" />
           </Button>
-          <Button variant="ghost" size="sm" onClick={next}>
+          <Button variant="ghost" size="sm" onClick={next} aria-label="下一页">
             <ChevronRight className="w-4 h-4" />
           </Button>
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="px-3 sm:px-6">
         {viewType === VIEW_TYPES.MONTH && <MonthView />}
         {viewType === VIEW_TYPES.WEEK && <WeekView />}
         {viewType === VIEW_TYPES.DAY && <DayView />}

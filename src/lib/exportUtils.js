@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { format, isValid } from 'date-fns';
 import { zhCN } from 'date-fns/locale';
 
 const headers = [
@@ -20,7 +20,21 @@ const headers = [
     '流程备注',
 ];
 
-const escapeCSVCell = (value) => `"${String(value ?? '').replace(/"/g, '""')}"`;
+const escapeCSVCell = (value) => {
+  const text = String(value ?? '');
+  // Quoting alone does not prevent spreadsheet formulas. Keep untrusted text as text
+  // in Excel-oriented exports; the tab is intentionally part of the exported cell.
+  const safeText = typeof value === 'string' && /^(?:[\s\u0000-\u001f]*[=+\-@＝＋－＠]|[\t\r\n])/.test(text)
+    ? `\t${text}`
+    : text;
+  return `"${safeText.replace(/"/g, '""')}"`;
+};
+
+const formatExportDate = (value) => {
+  if (!value) return '';
+  const date = new Date(value);
+  return isValid(date) ? format(date, 'yyyy-MM-dd HH:mm', { locale: zhCN }) : '';
+};
 
 export const buildCSV = (applications, interviews = []) => {
 
@@ -40,7 +54,7 @@ export const buildCSV = (applications, interviews = []) => {
       app.status || '',
       app.job_url || '',
       app.notes || '',
-      app.created_at ? format(new Date(app.created_at), 'yyyy-MM-dd HH:mm', { locale: zhCN }) : '',
+      formatExportDate(app.created_at),
     ];
 
     if (appProcesses.length === 0) {
@@ -53,8 +67,8 @@ export const buildCSV = (applications, interviews = []) => {
       const row = idx === 0 ? baseRow : baseRow.map(() => ''); // 后续流程行的基础信息为空
       return row.concat([
         process.process_type || '面试',
-        process.scheduled_time ? format(new Date(process.scheduled_time), 'yyyy-MM-dd HH:mm', { locale: zhCN }) : '',
-        process.deadline ? format(new Date(process.deadline), 'yyyy-MM-dd HH:mm', { locale: zhCN }) : '',
+        formatExportDate(process.scheduled_time),
+        formatExportDate(process.deadline),
         process.status || '',
         process.location || '',
         process.notes || '',
