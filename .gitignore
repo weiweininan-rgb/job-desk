@@ -1,0 +1,11 @@
+node_modules
+build
+.env*.local
+.env
+.env.*
+!.env.example
+supabase/.temp/
+.playwright-cli/
+output/
+release/
+*.log

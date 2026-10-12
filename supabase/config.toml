@@ -1,0 +1,5 @@
+[functions.sync-feishu]
+verify_jwt = false
+
+[functions.feishu-oauth-callback]
+verify_jwt = false
