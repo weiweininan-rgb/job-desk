@@ -187,7 +187,7 @@ export const ApplicationCard = ({
   return (
     <>
       <Card className={`border-slate-200 bg-white/95 transition-all hover:shadow-md ${application.is_abandoned ? 'bg-slate-100 opacity-65 grayscale' : ''} ${application.is_pinned ? 'border-amber-200 shadow-sm shadow-amber-100/70' : ''} ${application.is_chengdu ? 'border-l-4 border-l-rose-500' : ''}`}>
-        <CardHeader className="pb-3">
+        <CardHeader className="min-w-0 p-3 sm:p-6 sm:pb-3">
           <div className="flex items-start justify-between gap-3">
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
@@ -241,7 +241,7 @@ export const ApplicationCard = ({
             </div>
           </div>
         </CardHeader>
-        <CardContent className="pt-0">
+        <CardContent className="min-w-0 px-3 pt-0 sm:px-6">
           <div className="space-y-2 text-sm">
             {application.job_url && (
               <div className="flex items-center rounded-md bg-amber-50 p-2 text-amber-800">

@@ -526,7 +526,7 @@ export default function Index() {
 
           <TabsContent value="list" className="space-y-4">
             {isLoading ?
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {[1, 2, 3, 4, 5, 6].map((i) =>
               <Skeleton key={i} className="h-48" />
               )}
@@ -546,7 +546,7 @@ export default function Index() {
               }
               </div> :
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {filteredApplications.map((app) =>
               <ApplicationCard
                 key={app.id}

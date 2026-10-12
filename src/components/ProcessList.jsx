@@ -362,7 +362,7 @@ export const ProcessList = ({ applicationId, application, isPreloading = false }
 
   return (
     <div className="space-y-3 animate-in fade-in slide-in-from-top-2 duration-300">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <h4 className="text-sm font-semibold text-muted-foreground flex items-center gap-2">
           <ClipboardCheck className="w-4 h-4" />
           流程进度
