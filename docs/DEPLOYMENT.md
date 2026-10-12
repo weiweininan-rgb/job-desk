@@ -10,6 +10,10 @@
 
 在 Authentication 中创建你的邮箱密码账号，并关闭 Allow new users to sign up。前端不提供注册入口，但隐藏入口不能替代关闭后端注册。设置 Auth Site URL 为最终站点地址。
 
+只关闭公开注册，保留 Email 登录提供者启用；关闭 Email provider 会导致已有账号也无法用邮箱密码登录。若使用当前 Supabase CLI 配置，设置全局 `auth.enable_signup=false`，保留 `auth.email.enable_signup=true`，并通过实际注册请求确认注册被拒绝。
+
+已登录 Supabase CLI 的 AI 也可以使用 `npx supabase@latest db query --linked --project-ref YOUR_PROJECT_REF --file deploy/schema.sql` 初始化空库。必须显式指定新项目，先查询确认空库，不使用默认链接的旧项目。SQL 的空库保护仍会生效。
+
 获取项目 URL 与 anon/publishable key。不要使用 service_role 或 secret key。
 
 也可以让 AI 运行初始化脚本：
