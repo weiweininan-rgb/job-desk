@@ -53,7 +53,7 @@ Pages 的账户和仓库可用条件以[GitHub 官方说明](https://docs.github
 
 ### 已有实例的同步锁权限修复
 
-2026-10-12 之前初始化的实例，应在自己的 Supabase SQL Editor 执行
+尚未包含本次同步锁权限修复的已有实例，应在自己的 Supabase SQL Editor 执行
 `deploy/upgrades/202610120001_restrict_feishu_sync_rpc.sql`（或用 CLI 显式指定自己的 project-ref）。
 这是独立、可重复执行的权限补丁，不删除记录；不要在旧库重跑空库初始化脚本。
 它撤销匿名及登录用户对两个服务端同步锁 RPC 的执行权限，保留 service_role。
